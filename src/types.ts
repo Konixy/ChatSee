@@ -14,3 +14,11 @@ interface SocketWithIO extends NetSocket {
 export interface NextApiResponseWithSocket extends NextApiResponse {
   socket: SocketWithIO;
 }
+
+export type Message = {
+  id: string;
+  content: string;
+  sender: string;
+  loading?: boolean;
+};
+export type Conv = Message[];
