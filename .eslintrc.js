@@ -10,6 +10,7 @@ module.exports = {
     // Make sure it's always the last config, so it gets the chance to override other configs.
     'eslint-config-prettier',
     'plugin:tailwindcss/recommended',
+    'next/core-web-vitals',
   ],
   settings: {
     react: {

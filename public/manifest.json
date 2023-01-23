@@ -1,0 +1,21 @@
+{
+  "name": "Chat See is a web app for chatting",
+  "short_name": "Chat See",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#130529",
+  "theme_color": "#130529",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/logo150.png",
+      "type": "image/png",
+      "sizes": "150x150"
+    },
+    {
+      "src": "/logo500.png",
+      "type": "image/png",
+      "sizes": "500x500"
+    }
+  ]
+}
