@@ -8,7 +8,7 @@ export default function App() {
       <Header />
       <div className="centered text-center font-Beau text-6xl">
         <div>My awesome chat app!</div>
-        <Link href="/pagenotfound" className="mt-6 rounded-md bg-second py-4 px-6 text-xl">
+        <Link href="/404" className="mt-6 rounded-md bg-second py-4 px-6 text-xl">
           Test 404 page
         </Link>
       </div>

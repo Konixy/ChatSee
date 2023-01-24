@@ -17,6 +17,7 @@ export interface NextApiResponseWithSocket extends NextApiResponse {
 
 export type MessageType = {
   id: string;
+  convId?: string;
   content: string;
   sender: string;
   loading?: boolean;

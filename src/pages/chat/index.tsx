@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { createContext, FormEvent, useContext, useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import Head from 'next/head';
 import { ScriptProps } from 'next/script';
@@ -9,26 +9,24 @@ import Message from '@/components/Message';
 import type { Socket } from 'socket.io-client';
 import { Conv, MessageType } from '@/types';
 import MessageBox from '@/components/MessageBox';
+const ConvContext = createContext<{
+  conv: Conv;
+  setConv: React.Dispatch<React.SetStateAction<Conv>>;
+}>({
+  conv: [],
+  setConv: () => {
+    return;
+  },
+});
+const user = nanoid();
+
+export const useConv = () => useContext(ConvContext);
 
 let socket: undefined | Socket;
 
-function useConv() {
-  const [conv, setConv] = useState<Conv>([]);
-  function addMessage(message: MessageType) {
-    setConv(conv.concat([message]));
-  }
-
-  function resolveMessage(message: MessageType) {
-    const targetMessage = conv.find((e) => e.loading && e.id === message.id);
-    if (targetMessage) targetMessage.loading = false;
-  }
-  return { conv, addMessage, resolveMessage };
-}
-
-export default function index(Props: ScriptProps) {
-  const user = 'konixy';
+function Index(Props: ScriptProps) {
   const [value, setValue] = useState('');
-  const { conv, addMessage, resolveMessage } = useConv();
+  const { conv, setConv } = useConv();
   const valueRegex = /[\S\s]+[\S]+/;
 
   useEffect(() => {
@@ -49,6 +47,16 @@ export default function index(Props: ScriptProps) {
     });
   }
 
+  function addMessage(message: MessageType) {
+    setConv([...conv, message]);
+  }
+
+  function resolveMessage(message: MessageType) {
+    const targetMessage = conv.find((e) => e.loading && e.id === message.id);
+    if (targetMessage) targetMessage.loading = false;
+    else addMessage(Object.assign(message, { loading: false }) as MessageType);
+  }
+
   function handleSend(e: FormEvent) {
     e.preventDefault();
     if (!value.match(valueRegex)) return;
@@ -62,8 +70,8 @@ export default function index(Props: ScriptProps) {
       <Header />
       <div className="mt-20 flex flex-col items-center">
         <div className="text-2xl">Chat</div>
-        <MessageBox messages={conv} user={user} />
-        <form onSubmit={handleSend} className="fixed bottom-0 mt-10 mb-10 flex flex-row">
+        <MessageBox user={user} />
+        <form onSubmit={handleSend} className="bottom-0 mt-10 mb-10 flex flex-row">
           <input
             className="rounded-md bg-gray-50 py-2 px-4 text-black outline-none placeholder:text-gray-500"
             type="text"
@@ -88,5 +96,15 @@ export default function index(Props: ScriptProps) {
         </form>
       </div>
     </>
+  );
+}
+
+export default function Provider() {
+  const [conv, setConv] = useState<Conv>([]);
+
+  return (
+    <ConvContext.Provider value={{ conv, setConv }}>
+      <Index />
+    </ConvContext.Provider>
   );
 }

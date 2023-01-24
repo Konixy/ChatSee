@@ -116,8 +116,13 @@
   font-style: italic;
 }
 
+// html,
 body {
   @apply font-Poppins text-xl text-white;
+}
+
+html {
+  @apply h-full;
 }
 
 .centered {

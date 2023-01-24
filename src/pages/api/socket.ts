@@ -1,4 +1,4 @@
-import { NextApiResponseWithSocket } from '@/types';
+import { MessageType, NextApiResponseWithSocket } from '@/types';
 import { NextApiRequest } from 'next';
 import { Server } from 'socket.io';
 
@@ -11,11 +11,11 @@ export default function SocketHandler(req: NextApiRequest, res: NextApiResponseW
     res.socket.server.io = io;
     io.on('connection', (socket) => {
       console.log('a user is connected');
-      socket.on('submit', (e) => {
+      socket.on('submit', (e: MessageType) => {
         socket.broadcast.emit('message', e);
         console.log('submitted', e);
       });
-      socket.on('message', () => console.log('a message arrived'));
+      socket.on('message', (e) => console.log('a message arrived', e));
     });
   }
   res.end();

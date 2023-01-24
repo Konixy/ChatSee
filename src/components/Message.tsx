@@ -10,7 +10,7 @@ export default function Message({
   loading: boolean | undefined;
 }) {
   return (
-    <div className={`${extern ? 'text-left' : 'text-right'} ${loading ? 'text-gray-500' : 'text-white'}`}>
+    <div className={`${extern ? 'text-right' : 'text-left'} ${loading ? 'text-gray-500' : 'text-white'}`}>
       {content}
     </div>
   );
