@@ -7,7 +7,7 @@ export default function Header() {
     <div className="flex flex-row items-center justify-evenly text-white">
       <Link href="/" className="flex select-none flex-row items-center font-Beau text-4xl">
         <Image
-          src={'/images/logo500.png'}
+          src={'/images/logo150.png'}
           alt="Chat See"
           width={48}
           height={48}

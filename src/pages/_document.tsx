@@ -9,7 +9,7 @@ export default function _document() {
         <link rel="icon" href="/images/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        <meta name="description" content="Web site created using create-react-app" />
+        <meta name="description" content="Simple chat app" />
         <link rel="apple-touch-icon" href="/images/logo150.png" />
         <link rel="manifest" href="/manifest.json" />
       </Head>

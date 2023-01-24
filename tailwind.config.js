@@ -5,8 +5,7 @@ module.exports = {
     extend: {
       colors: {
         main: '#130529',
-        second: '#ff269e',
-        third: '#ff269e',
+        second: '#ff269e'
       },
       fontFamily: {
         Beau: ['PF BeauSans Pro', 'Poppins', 'sans-serif'],

@@ -15,10 +15,10 @@ export interface NextApiResponseWithSocket extends NextApiResponse {
   socket: SocketWithIO;
 }
 
-export type Message = {
+export type MessageType = {
   id: string;
   content: string;
   sender: string;
   loading?: boolean;
 };
-export type Conv = Message[];
+export type Conv = MessageType[];

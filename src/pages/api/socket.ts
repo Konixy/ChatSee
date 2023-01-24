@@ -11,7 +11,10 @@ export default function SocketHandler(req: NextApiRequest, res: NextApiResponseW
     res.socket.server.io = io;
     io.on('connection', (socket) => {
       console.log('a user is connected');
-      socket.on('submit', (e) => console.log('submitted', e));
+      socket.on('submit', (e) => {
+        socket.broadcast.emit('message', e);
+        console.log('submitted', e);
+      });
       socket.on('message', () => console.log('a message arrived'));
     });
   }
