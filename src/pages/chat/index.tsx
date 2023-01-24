@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { ScriptProps } from 'next/script';
 import io from 'socket.io-client';
 import { nanoid } from 'nanoid';
-import {}
+// import {}
 
 import type { Socket } from 'socket.io-client';
 import { Conv, Message } from '@/types';
