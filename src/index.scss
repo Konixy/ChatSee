@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
+@import url('https://cdn.rawgit.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css');
 
 @tailwind base;
 @tailwind components;
@@ -118,7 +119,7 @@
 
 // html,
 body {
-  @apply font-Poppins text-xl text-white;
+  @apply font-Gilroy text-xl font-semibold text-white;
 }
 
 html {
@@ -127,4 +128,14 @@ html {
 
 .centered {
   @apply absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%];
+}
+
+.bg-gradient {
+  @apply bg-gradient-to-r from-violet-gradient-left to-violet-gradient-right;
+}
+
+$bgColor: #1b0d28;
+
+.clay-shadow {
+  box-shadow: 34px 34px 68px $bgColor, inset -8px -8px 16px $bgColor, inset 0px 14px 28px rgb(5, 0, 5);
 }

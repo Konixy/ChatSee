@@ -12,7 +12,7 @@ export default function _document() {
         <link rel="apple-touch-icon" href="/images/logo150.png" />
         <link rel="manifest" href="/manifest.json" />
       </Head>
-      <body className="bg-main">
+      <body className="bg-gradient-to-b from-dark-900 to-violet-900">
         <Main />
         <NextScript />
       </body>
