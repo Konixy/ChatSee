@@ -23,3 +23,10 @@ export type MessageType = {
   loading?: boolean;
 };
 export type Conv = MessageType[];
+
+export type APIUser = {
+  username: string;
+  avatarUrl?: string;
+  email: string;
+  online: boolean;
+};

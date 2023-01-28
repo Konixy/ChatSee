@@ -131,11 +131,24 @@ html {
 }
 
 .bg-gradient {
-  @apply bg-gradient-to-r from-violet-gradient-left to-violet-gradient-right;
+  @apply bg-gradient-to-tr from-violet-gradient-left to-violet-gradient-right;
 }
 
-$bgColor: #1b0d28;
+$bgColor: rgb(27 13 40 / 0.5);
+$test: rgba(145, 192, 255, 0.5);
+$firstColor: #8009f6;
+$secondColor: #af60fe;
+$lightColor: rgb(202 149 255 / 0.5);
 
 .clay-shadow {
-  box-shadow: 34px 34px 68px $bgColor, inset -8px -8px 16px $bgColor, inset 0px 14px 28px rgb(5, 0, 5);
+  box-shadow: 35px 35px 68px 0px $bgColor, inset -10px -10px 16px 0px rgba(0, 0, 0, 0.6),
+    inset 0px 11px 28px 0px $secondColor;
+}
+
+.clay-shadow:hover {
+  transform: scale(1.04);
+}
+
+.clay-shadow:active {
+  transform: scale(0.96);
 }

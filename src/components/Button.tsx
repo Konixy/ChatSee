@@ -5,7 +5,7 @@ import { ComponentPropsWithoutRef } from 'react';
 export function Primary(
   Props: { href: string; type: 'href' | 'link' } & React.PropsWithChildren & LinkProps & ComponentPropsWithoutRef<'a'>,
 ) {
-  const style = 'bg-gradient clay-shadow rounded-lg py-2 px-4 ' + Props.className;
+  const style = 'bg-gradient clay-shadow rounded-2xl py-2 px-4 transition-all ' + Props.className;
   return Props.type === 'link' ? (
     <Link {...Props} className={style}>
       {Props.children}

@@ -4,6 +4,7 @@ import '@/index.scss';
 import { AppComponent } from 'next/dist/shared/lib/router/router';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { UserProvider } from '@/userContext';
 
 export default function App({ Component, pageProps }: { Component: AppComponent; pageProps: AppProps }) {
   return (
@@ -12,7 +13,9 @@ export default function App({ Component, pageProps }: { Component: AppComponent;
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Chat See</title>
       </Head>
-      <Component {...pageProps} />
+      <UserProvider>
+        <Component {...pageProps} />
+      </UserProvider>
     </>
   );
 }

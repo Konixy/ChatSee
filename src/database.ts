@@ -1,4 +1,9 @@
 import mongoose from 'mongoose';
 import schema from './databaseSchema';
+import config from '@/config';
 
-const database = new mongoose.model('user', schema);
+const database = mongoose.model('user', schema);
+
+mongoose.connect(config.mongoDbUri).then(() => console.log('mongodb connected'));
+
+export default database;

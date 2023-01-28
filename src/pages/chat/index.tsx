@@ -9,6 +9,7 @@ import Message from '@/components/Message';
 import type { Socket } from 'socket.io-client';
 import { Conv, MessageType } from '@/types';
 import MessageBox from '@/components/MessageBox';
+import { useUser } from '@/userContext';
 const ConvContext = createContext<{
   conv: Conv;
   setConv: React.Dispatch<React.SetStateAction<Conv>>;
@@ -27,7 +28,8 @@ let socket: undefined | Socket;
 function Index(Props: ScriptProps) {
   const [value, setValue] = useState('');
   const { conv, setConv } = useConv();
-  const valueRegex = /[\S\s]+[\S]+/;
+  const userProvider = useUser();
+  const valueRegex = /(.|\s)*\S(.|\s)*/;
 
   useEffect(() => {
     socketInitializer();
@@ -58,9 +60,10 @@ function Index(Props: ScriptProps) {
   }
 
   function handleSend(e: FormEvent) {
+    const messageContent = value.replace(/^\s+|\s+$/g, '');
     e.preventDefault();
-    if (!value.match(valueRegex)) return;
-    const message = { content: value, id: nanoid(), sender: user };
+    if (!messageContent.match(valueRegex)) return;
+    const message = { content: messageContent, id: nanoid(), sender: user };
     socket?.emit('submit', message);
     addMessage(Object.assign(message, { loading: true }));
     setValue('');
@@ -68,7 +71,7 @@ function Index(Props: ScriptProps) {
   return (
     <>
       <div className="mt-20 flex flex-col items-center">
-        <div className="text-2xl">Chat</div>
+        <div className="text-2xl">Chat {userProvider.user && <>(logged in as {userProvider.user?.username})</>}</div>
         <MessageBox user={user} />
         <form onSubmit={handleSend} className="bottom-0 mt-10 mb-10 flex flex-row items-center">
           <input
