@@ -3,17 +3,22 @@ import React from 'react';
 import { ComponentPropsWithoutRef } from 'react';
 
 export function Primary(
-  Props: { href: string; type: 'href' | 'link' } & React.PropsWithChildren & LinkProps & ComponentPropsWithoutRef<'a'>,
+  Props: { href?: string; type: 'href' | 'link' | 'button' } & React.PropsWithChildren &
+    (ComponentPropsWithoutRef<'a'> | ComponentPropsWithoutRef<'button'>),
 ) {
   const style = 'bg-gradient clay-shadow rounded-2xl py-2 px-4 transition-all ' + Props.className;
   return Props.type === 'link' ? (
-    <Link {...Props} className={style}>
+    <Link href={Props.href as string} {...Props} className={style}>
       {Props.children}
     </Link>
-  ) : (
+  ) : Props.type === 'href' ? (
     <a {...Props} className={style} target="_blank" rel="noreferrer">
       {Props.children}
     </a>
+  ) : (
+    <button {...(Props as ComponentPropsWithoutRef<'button'>)} className={style}>
+      {Props.children}
+    </button>
   );
 }
 
