@@ -6,7 +6,7 @@ export function Primary(
   Props: { href?: string; type: 'href' | 'link' | 'button' } & React.PropsWithChildren &
     (ComponentPropsWithoutRef<'a'> | ComponentPropsWithoutRef<'button'>),
 ) {
-  const style = 'bg-gradient clay-shadow rounded-2xl py-2 px-4 transition-all ' + Props.className;
+  const style = 'bg-gradient clay-shadow clay-button rounded-2xl py-2 px-4 transition-all ' + Props.className;
   return Props.type === 'link' ? (
     <Link href={Props.href as string} {...Props} className={style}>
       {Props.children}

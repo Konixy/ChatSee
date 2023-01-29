@@ -145,10 +145,10 @@ $lightColor: rgb(202 149 255 / 0.5);
     inset 0px 11px 28px 0px $secondColor;
 }
 
-.clay-shadow:hover {
+.clay-button:hover {
   transform: scale(1.04);
 }
 
-.clay-shadow:active {
+.clay-button:active {
   transform: scale(0.96);
 }
