@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+@import url('https://cdn.rawgit.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro Bbook';
+  src: url('/fonts/PFBeauSansPro-Bbook.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro XThin';
+  src: url('/fonts/PFBeauSansPro-XThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro XThin';
+  src: url('/fonts/PFBeauSansPro-XThin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro Bbook';
+  src: url('/fonts/PFBeauSansPro-BbookItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: url('/fonts/PFBeauSansPro-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+}
+
+// html,
+body {
+  @apply font-Gilroy text-xl font-semibold text-white;
+}
+
+html {
+  @apply h-full;
+}
+
+.centered {
+  @apply absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%];
+}
+
+.bg-gradient {
+  @apply bg-gradient-to-tr from-violet-gradient-left to-violet-gradient-right;
+}
+
+$bgColor: rgb(27 13 40 / 0.5);
+$test: rgba(145, 192, 255, 0.5);
+$firstColor: #8009f6;
+$secondColor: #af60fe;
+$lightColor: rgb(202 149 255 / 0.5);
+
+.clay-shadow {
+  box-shadow: 35px 35px 68px 0px $bgColor, inset -10px -10px 16px 0px rgba(0, 0, 0, 0.6),
+    inset 0px 11px 28px 0px $secondColor;
+}
+
+.clay-button:hover {
+  transform: scale(1.04);
+}
+
+.clay-button:active {
+  transform: scale(0.96);
+}
