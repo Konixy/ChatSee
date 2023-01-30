@@ -1,5 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import config from '@/config';
 import database from '@/database';
 import cookies from '@/cookies';
 
