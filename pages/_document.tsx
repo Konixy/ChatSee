@@ -1,5 +1,6 @@
 import React from 'react';
 import { Html, Head, Main, NextScript } from 'next/document';
+import Loading from 'pages/loading';
 
 export default function _document() {
   return (
@@ -14,7 +15,9 @@ export default function _document() {
         <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v6.2.0/css/pro.min.css" />
       </Head>
       <body className="bg-gradient-to-b from-dark-900 to-violet-900">
-        <Main />
+        <React.Suspense fallback={<Loading />}>
+          <Main />
+        </React.Suspense>
         <NextScript />
       </body>
     </Html>

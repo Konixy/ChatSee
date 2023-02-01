@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 import { APIUserWithPassword } from './types';
 
 export default new Schema<APIUserWithPassword>({
-  id: {
+  _id: {
     type: String,
     required: true,
   },

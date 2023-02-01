@@ -27,7 +27,7 @@ export type Conv = MessageType[];
 export type APIUserWithPassword = APIUser & { password: string };
 
 export type APIUser = {
-  id: string;
+  _id: string;
   username: string;
   avatarUrl?: string;
   email: string;
