@@ -20,22 +20,12 @@ export default function Header() {
       </Link>
       {user ? (
         <Button.Primary href="/chat" type="link">
-          Start chatting
+          My chat
         </Button.Primary>
       ) : (
-        <button
-          onClick={() =>
-            setUser({
-              username: 'Konixy',
-              fullname: 'Anatole Dufour',
-              id: '123',
-              email: 'konixy.p@gmail.com',
-              online: true,
-            })
-          }
-        >
-          Log in
-        </button>
+        <Button.Primary href="/register" type="link">
+          Get stared!
+        </Button.Primary>
       )}
     </div>
   );
