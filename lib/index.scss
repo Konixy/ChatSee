@@ -147,11 +147,11 @@ $lightColor: rgb(202 149 255 / 0.5);
       inset 0px 5px 14px 0px $secondColor;
   }
 
-  .clay-button:hover {
+  .clay-button:not(:disabled):hover {
     @apply scale-105;
   }
 
-  .clay-button:active {
+  .clay-button:not(:disable):active {
     @apply scale-95;
   }
 }

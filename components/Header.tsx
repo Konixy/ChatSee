@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Button from 'components/Button';
+import Button from 'components/Buttons';
 import { useUser } from 'lib/userContext';
 
 export default function Header() {
@@ -13,14 +13,14 @@ export default function Header() {
       </Link>
       <Link href="/" className="flex select-none flex-row items-center font-Beau text-4xl font-normal">
         <Image
-          src={'/images/logo1.svg'}
+          src={'/images/logo150.png'}
           alt="Chat See"
           width={75}
           height={75}
           className="mr-2 block bg-cover bg-no-repeat"
         />
       </Link>
-      <Button.Primary href={user ? '/chat' : '/user/register'} type="link" px={4} py={2}>
+      <Button.Primary href={user ? '/chat' : '/user/register'} as="link" px={4} py={2}>
         {user ? 'My chat' : 'Get Started!'}
       </Button.Primary>
     </div>

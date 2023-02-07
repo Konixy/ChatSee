@@ -11,6 +11,7 @@ import { Conv, MessageType } from 'lib/types';
 import MessageBox from 'components/MessageBox';
 import { useUser } from 'lib/userContext';
 import Link from 'next/link';
+import BackButton from 'components/BackButton';
 const ConvContext = createContext<{
   conv: Conv;
   setConv: React.Dispatch<React.SetStateAction<Conv>>;
@@ -71,10 +72,7 @@ function Index(Props: ScriptProps) {
   }
   return (
     <>
-      <Link href="/" className="absolute left-[15%]">
-        <i className="fa-solid fa-arrow-left mr-2" />
-        Retour a l'acceuil
-      </Link>
+      <BackButton />
       <div className="mt-20 flex flex-col items-center">
         <div className="text-2xl">Chat</div>
         {/* userProvider.user && <>(logged in as {userProvider.user?.username})</>*/}

@@ -4,7 +4,7 @@ import Loading from 'pages/loading';
 
 export default function _document() {
   return (
-    <Html lang="fr" className="dark">
+    <Html lang="fr">
       <Head>
         <meta charSet="utf-8" />
         <link rel="icon" href="/images/favicon.ico" />
