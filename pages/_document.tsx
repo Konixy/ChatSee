@@ -14,7 +14,7 @@ export default function _document() {
         <link rel="manifest" href="/manifest.json" />
         <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v6.2.0/css/pro.min.css" />
       </Head>
-      <body className="bg-gradient-to-b from-dark-900 to-violet-900">
+      <body className="bg-gradient-to-b from-light to-violet-300 dark:from-dark-900 dark:to-violet-900">
         <React.Suspense fallback={<Loading />}>
           <Main />
         </React.Suspense>

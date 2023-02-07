@@ -4,6 +4,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
 @font-face {
   font-family: 'PF BeauSans Pro';
@@ -119,7 +120,7 @@
 
 // html,
 body {
-  @apply font-Gilroy text-xl font-semibold text-white;
+  @apply font-Gilroy text-xl font-semibold text-black dark:text-white;
 }
 
 html {
@@ -140,15 +141,17 @@ $firstColor: #8009f6;
 $secondColor: #af60fe;
 $lightColor: rgb(202 149 255 / 0.5);
 
-.clay-shadow {
-  box-shadow: 35px 35px 68px 0px $bgColor, inset -10px -10px 16px 0px rgba(0, 0, 0, 0.6),
-    inset 0px 11px 28px 0px $secondColor;
-}
+@layer components {
+  .clay-shadow {
+    box-shadow: 35px 35px 68px 0px $bgColor, inset -10px -10px 16px 0px rgba(0, 0, 0, 0.6),
+      inset 0px 11px 28px 0px $secondColor;
+  }
 
-.clay-button:hover {
-  transform: scale(1.04);
-}
+  .clay-button:hover {
+    @apply scale-105;
+  }
 
-.clay-button:active {
-  transform: scale(0.96);
+  .clay-button:active {
+    @apply scale-95;
+  }
 }

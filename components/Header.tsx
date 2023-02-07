@@ -7,7 +7,7 @@ import { useUser } from 'lib/userContext';
 export default function Header() {
   const { user, setUser } = useUser();
   return (
-    <div className="m-6 flex flex-col items-center justify-evenly text-white sm:flex-row">
+    <div className="m-6 flex flex-col items-center justify-evenly text-black dark:text-white sm:flex-row">
       <Link href="/" className="flex select-none flex-row items-center font-Beau text-4xl font-normal">
         <Image
           src={'/images/logo.svg'}
@@ -18,15 +18,9 @@ export default function Header() {
         />
         chat see
       </Link>
-      {user ? (
-        <Button.Primary href="/chat" type="link">
-          My chat
-        </Button.Primary>
-      ) : (
-        <Button.Primary href="/register" type="link">
-          Get stared!
-        </Button.Primary>
-      )}
+      <Button.Primary href={user ? '/chat' : '/register'} type="link" px={4} py={2}>
+        {user ? 'My chat' : 'Get Started!'}
+      </Button.Primary>
     </div>
   );
 }

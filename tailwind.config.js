@@ -1,9 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: ['./app/**/*.{js,ts,jsx,tsx}', './pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
+        light: {
+          DEFAULT: '#fff',
+        },
         dark: {
           700: '#4d4c4e',
           800: '#1f1f1f',
@@ -28,7 +33,11 @@ module.exports = {
         Gilroy: ['Gilroy', 'Poppins', 'sans-serif'],
         Poppins: ['Poppins', 'Gilroy', 'sans-serif'],
       },
+      borderRadius: {
+        clay: '12px',
+      },
     },
   },
-  plugins: [],
+  darkMode: 'media',
+  plugins: [require('tailwindcss-claymorphism')],
 };
