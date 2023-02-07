@@ -141,8 +141,8 @@ $secondColor: #af60fe;
 $lightColor: rgb(202 149 255 / 0.5);
 
 .clay-shadow {
-  box-shadow: 35px 35px 68px 0px $bgColor, inset -10px -10px 16px 0px rgba(0, 0, 0, 0.6),
-    inset 0px 11px 28px 0px $secondColor;
+  box-shadow: 35px 35px 68px 0px $bgColor, inset -5px -5px 8px 0px rgba(0, 0, 0, 0.6),
+    inset 0px 5px 14px 0px $secondColor;
 }
 
 .clay-button:hover {
