@@ -33,4 +33,5 @@ export type APIUser = {
   email: string;
   online: boolean;
   fullname: string;
+  verified?: boolean;
 };

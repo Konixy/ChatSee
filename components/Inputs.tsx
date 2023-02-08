@@ -37,3 +37,9 @@ export function DateInput(Props: { validateSetter: (value: boolean) => void } & 
     />
   );
 }
+
+export function TextInput(Props: ComponentPropsWithoutRef<'input'>) {
+  const [value, setValue] = useState('');
+
+  return <input {...Props} type="text" value={value} onChange={(e) => setValue(e.target.value)} />;
+}

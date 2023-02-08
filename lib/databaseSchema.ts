@@ -26,4 +26,8 @@ export default new Schema<APIUserWithPassword>({
     type: String,
     required: true,
   },
+  verified: {
+    type: Boolean,
+    required: false,
+  },
 });

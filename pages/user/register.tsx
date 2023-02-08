@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from 'components/Header';
 import Button, { Primary } from 'components/Buttons';
 import BackButton from 'components/BackButton';
-import { DateInput, EmailInput } from 'components/Inputs';
+import { DateInput, EmailInput, TextInput } from 'components/Inputs';
 import DatePicker from 'react-datepicker';
 
 export default function Register() {
@@ -19,14 +19,22 @@ export default function Register() {
       <BackButton />
       <div className="absolute left-1/2 flex h-full -translate-x-1/2 flex-col items-center justify-center">
         <form onSubmit={handleForm}>
-          <label htmlFor="emailInput" className="text-2xl">
-            {step === 0 ? 'First, we need your email adress:' : step === 1 ? 'Next, your date of birth:' : ''}
+          <label htmlFor="input" className="text-2xl">
+            {step === 0
+              ? 'First, we need your email adress:'
+              : step === 1
+              ? 'Next, your full name.'
+              : step === 2
+              ? 'Next, your date of birth:'
+              : ''}
           </label>
           <br />
           {step === 0 ? (
-            <EmailInput name="email" id="emailInput" validateSetter={setIsValidate} className="my-4" />
+            <EmailInput name="email" id="input" validateSetter={setIsValidate} className="my-4" />
           ) : step === 1 ? (
-            <DateInput validateSetter={setIsValidate} className="my-4" />
+            <TextInput placeholder="John Doe" id="input" />
+          ) : step === 2 ? (
+            <DateInput validateSetter={setIsValidate} className="my-4" id="input" />
           ) : (
             step
           )}
