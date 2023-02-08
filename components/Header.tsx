@@ -20,7 +20,7 @@ export default function Header() {
           className="mr-2 block bg-cover bg-no-repeat"
         />
       </Link>
-      <Button.Primary href={user ? '/chat' : '/user/register'} as="link" px={4} py={2}>
+      <Button.Primary href={user ? '/chat' : '/user/register/mail'} as="link" px={4} py={2}>
         {user ? 'My chat' : 'Get Started!'}
       </Button.Primary>
     </div>

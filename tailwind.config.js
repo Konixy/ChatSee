@@ -39,5 +39,10 @@ module.exports = {
     },
   },
   darkMode: 'class',
-  plugins: [require('tailwindcss-claymorphism')],
+  plugins: [
+    require('tailwindcss-claymorphism'),
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
+  ],
 };

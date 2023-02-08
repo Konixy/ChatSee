@@ -3,7 +3,12 @@ import React from 'react';
 import { ComponentPropsWithoutRef } from 'react';
 
 export function Primary(
-  Props: { href?: string; as: 'href' | 'link' | 'button'; px?: number; py?: number } & React.PropsWithChildren &
+  Props: {
+    href?: string;
+    as: 'href' | 'link' | 'button';
+    px?: number;
+    py?: number;
+  } & React.PropsWithChildren &
     (ComponentPropsWithoutRef<'a'> | ComponentPropsWithoutRef<'button'>),
 ) {
   const style =
@@ -12,7 +17,7 @@ export function Primary(
     } transition-all text-white rounded-clay disabled:bg-pink-300 disabled:cursor-not-allowed ` + Props.className;
   const Children = <div className="translate-y-1">{Props.children}</div>;
   return Props.as === 'link' ? (
-    <Link {...(Props as LinkProps)} href={Props.href as string} as="a" className={style}>
+    <Link {...(Props as LinkProps)} as={undefined} href={Props.href as string} className={style}>
       {Props.children}
     </Link>
   ) : Props.as === 'href' ? (

@@ -1,3 +1,5 @@
+@import url('./datepicker.component.scss');
+@import url('./fonts.component.css');
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 @import url('https://cdn.rawgit.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css');
 
@@ -5,118 +7,6 @@
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-BoldItalic.ttf') format('truetype');
-  font-weight: bold;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro Bbook';
-  src: url('/fonts/PFBeauSansPro-Bbook.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-ThinItalic.ttf') format('truetype');
-  font-weight: 100;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro XThin';
-  src: url('/fonts/PFBeauSansPro-XThinItalic.ttf') format('truetype');
-  font-weight: 100;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-Thin.ttf') format('truetype');
-  font-weight: 100;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro XThin';
-  src: url('/fonts/PFBeauSansPro-XThin.ttf') format('truetype');
-  font-weight: 100;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-SemiBoldItalic.ttf') format('truetype');
-  font-weight: 600;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro Bbook';
-  src: url('/fonts/PFBeauSansPro-BbookItalic.ttf') format('truetype');
-  font-weight: 500;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-LightItalic.ttf') format('truetype');
-  font-weight: 300;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-Italic.ttf') format('truetype');
-  font-weight: normal;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PF BeauSans Pro';
-  src: url('/fonts/PFBeauSansPro-BlackItalic.ttf') format('truetype');
-  font-weight: 900;
-  font-style: italic;
-}
 
 // html,
 body {

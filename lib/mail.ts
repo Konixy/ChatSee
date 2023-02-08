@@ -3,8 +3,6 @@ import dotenv from 'dotenv';
 import { render } from '@react-email/render';
 import { Tailwind } from '@react-email/tailwind';
 import { VerifyEmail } from 'components/Emails';
-import { nanoid } from 'nanoid';
-import { APIUser } from './types';
 import { createTransport } from 'nodemailer';
 
 const env = dotenv.config();
@@ -27,5 +25,8 @@ export async function sendVerifyEmail({ username, to, code }: { to: string; user
   return transporter.sendMail({
     from: process.env.MAIL_USER,
     to,
+    subject: `Verify email for ${to}`,
+    text: `Please verify your email with the following code : ${code}`,
+    html: content
   });
 }
