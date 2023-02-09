@@ -54,7 +54,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx",
-    "sync": "git commit -a -m \"Update\" && git push"
+    "sync": "git add -A && git commit -m \"Update\" && git push"
   },
   "eslintConfig": {
     "extends": [
