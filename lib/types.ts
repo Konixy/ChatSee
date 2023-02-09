@@ -34,4 +34,5 @@ export type APIUser = {
   online: boolean;
   fullname: string;
   verified?: boolean;
+  birthDate: Date;
 };

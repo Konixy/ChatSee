@@ -41,7 +41,7 @@ $lightColor: rgb(202 149 255 / 0.5);
     @apply scale-105;
   }
 
-  .clay-button:not(:disable):active {
+  .clay-button:not(:disabled):active {
     @apply scale-95;
   }
 }

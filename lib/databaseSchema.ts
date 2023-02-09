@@ -30,4 +30,8 @@ export default new Schema<APIUserWithPassword>({
     type: Boolean,
     required: false,
   },
+  birthDate: {
+    type: Date,
+    required: true,
+  },
 });

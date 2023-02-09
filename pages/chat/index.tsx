@@ -11,7 +11,7 @@ import { Conv, MessageType } from 'lib/types';
 import MessageBox from 'components/MessageBox';
 import { useUser } from 'lib/userContext';
 import Link from 'next/link';
-import BackButton from 'components/BackButton';
+import { MenuButton } from 'components/BackButton';
 const ConvContext = createContext<{
   conv: Conv;
   setConv: React.Dispatch<React.SetStateAction<Conv>>;
@@ -72,7 +72,7 @@ function Index(Props: ScriptProps) {
   }
   return (
     <>
-      <BackButton />
+      <MenuButton />
       <div className="mt-20 flex flex-col items-center">
         <div className="text-2xl">Chat</div>
         {/* userProvider.user && <>(logged in as {userProvider.user?.username})</>*/}

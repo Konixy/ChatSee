@@ -2,7 +2,13 @@ import database from 'lib/database';
 import withSession from 'lib/session';
 
 export default withSession(async (req, res) => {
-  if (!req.body) return res.send({ success: false, message: 'invalid request body' });
+  if (req.method !== 'POST') return res.status(404);
+  if (
+    !req.body ||
+    !req.body.username.match(/^(?=.{4,16}$)[a-zA-Z0-9._-]+$/g) ||
+    !req.body.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gi)
+  )
+    return res.send({ success: false, message: 'invalid request body' });
   console.log(req.body);
   database
     .findOne({ email: req.body.email, password: req.body.password })

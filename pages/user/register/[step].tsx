@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Header from 'components/Header';
-import Button, { Primary } from 'components/Buttons';
-import BackButton from 'components/BackButton';
-import { DateInput, EmailInput, TextInput } from 'components/Inputs';
-import DatePicker from 'react-datepicker';
+import { Primary } from 'components/Buttons';
+import { BackButton } from 'components/BackButton';
+import { DateInput, EmailInput, PasswordInput, TextInput } from 'components/Inputs';
 import { useRouter } from 'next/router';
 import { Slide } from '@mui/material';
 import axios from 'axios';
+import Link from 'next/link';
+import { APIUser } from '@/types';
+import { useUser } from '@/userContext';
 
-type Steps = 'mail' | 'name' | 'birth';
+type Steps = 'mail' | 'name' | 'birth' | 'verifyemail' | 'password';
 
 export default function Register() {
   const [data, setData] = useState<{ [a: string]: any }>({});
@@ -17,27 +18,80 @@ export default function Register() {
   }, [data]);
   const router = useRouter();
   const [step, setStep] = useState<Steps>(router.query.step as Steps);
+  const { setUser } = useUser();
   const [loading, setLoading] = useState(false);
   const [isValidate, setIsValidate] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!(router.query.step === 'mail' || router.query.step === 'name' || router.query.step === 'birth')) {
-      useEffect(() => {
-        router.push('/user/register');
-      }, []);
+    if (!data.username) return;
+    if (data.username === '') return setIsValidate(false);
+    const usernameRegex = /^(?=.{4,16}$)[a-zA-Z0-9._-]+$/g;
+    if (!data.username.match(usernameRegex)) {
+      setErrorMsg("username don't match the regex");
+      setIsValidate(false);
+    } else {
+      setErrorMsg(null);
+      setIsValidate(true);
+    }
+  }, [data.username]);
+
+  useEffect(() => {
+    if (!data.password) return;
+    if (data.password === '') return setIsValidate(false);
+    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    if (!data.password.match(passwordRegex)) {
+      setErrorMsg("password don't match the regex");
+      setIsValidate(false);
+    } else if (data.password === data.verifyPassword) {
+      setErrorMsg(null);
+      setIsValidate(true);
+      console.log('all is clean');
+    } else {
+      setErrorMsg('password and verifyPassword are not the same');
+      setIsValidate(false);
+    }
+  }, [data.password, data.verifyPassword]);
+
+  useEffect(() => {
+    if (
+      !(
+        router.query.step === 'mail' ||
+        router.query.step === 'name' ||
+        router.query.step === 'birth' ||
+        router.query.step === 'verifyemail' ||
+        router.query.step === 'password'
+      )
+    ) {
+      try {
+        useEffect(() => {
+          router.push('/user/register/mail');
+        }, []);
+      } catch (err) {
+        router.push('/user/register/mail');
+      }
     }
     setStep(router.query.step as Steps);
   }, [router.query.step]);
 
   if (
-    !(router.query.step === 'mail' || router.query.step === 'name' || router.query.step === 'birth') ||
-    (router.query.step === 'name' && !data.email) ||
+    !(
+      router.query.step === 'mail' ||
+      router.query.step === 'name' ||
+      router.query.step === 'birth' ||
+      router.query.step === 'password'
+    ) ||
+    (router.query.step === 'password' && !data.email) ||
+    (router.query.step === 'name' && !data.email && !data.password) ||
     (router.query.step === 'birth' && (!data.email || !data.fullname))
   ) {
-    useEffect(() => {
+    try {
+      useEffect(() => {
+        router.push('/user/register/mail');
+      }, []);
+    } catch (err) {
       router.push('/user/register/mail');
-    }, []);
+    }
 
     return <></>;
   }
@@ -47,18 +101,56 @@ export default function Register() {
     if (!isValidate) return;
     if (step === 'mail') {
       setLoading(true);
-      axios.get<{ result: boolean }>('/api/user/isemailtaken', { data: { email: data.email } }).then((e) => {
+      axios.post<{ result: boolean }>('/api/user/isemailtaken', { email: data.email }).then((r) => {
         setLoading(false);
-        if (e.data.result) return setErrorMsg('email is allready taken');
-        else router.push('/user/register/name');
+        if (r.data.result) return setErrorMsg('email is allready taken');
+        else {
+          setIsValidate(false);
+          setErrorMsg(null);
+          router.push('/user/register/password');
+        }
       });
+    } else if (step === 'password') {
+      if (data.password === '') return;
+      router.push('/user/register/name');
     } else if (step === 'name') {
-      return router.push('/user/register/birth');
+      if (data.username === '') return;
+      setLoading(true);
+      axios.post<{ result: boolean }>('/api/user/isusernametaken', { username: data.username }).then((r) => {
+        setLoading(false);
+        if (r.data.result) return setErrorMsg('username is allready taken');
+        else {
+          setErrorMsg(null);
+          router.push('/user/register/birth');
+        }
+      });
+    } else if (step === 'birth') {
+      if (!data.email || !data.username || !data.fullname || !data.password || !data.birthDate) return;
+      setLoading(true);
+      axios
+        .post<{ user: APIUser; success: boolean; message: string }>('/api/user/register', {
+          email: data.email,
+          password: data.password,
+          birthDate: data.birthDate,
+          username: data.username,
+          fullname: data.fullname,
+        })
+        .then((r) => {
+          setLoading(false);
+          if (r.data.success) {
+            setErrorMsg(null);
+            setUser(r.data.user);
+            router.push('/chat');
+          } else {
+            setErrorMsg(r.data.message);
+            console.log(r.data);
+          }
+        });
     }
   }
 
   function setter(property: string) {
-    return (e: any) => setData(Object.assign(data, { [property]: e }));
+    return (e: any) => setData(Object.assign({}, data, { [property]: e }));
   }
 
   const steps: { name: Steps; label: string; input: React.ReactNode }[] = [
@@ -66,113 +158,126 @@ export default function Register() {
       name: 'mail',
       label: 'First, we need your email adress:',
       input: (
-        <EmailInput name="email" id="input" setter={setter('email')} validatesetter={setIsValidate} className="my-4" />
+        <>
+          {errorMsg && <div className="mt-2 text-center text-red-600">{errorMsg}</div>}
+          <EmailInput
+            name="email"
+            id="input"
+            setter={setter('email')}
+            validatesetter={setIsValidate}
+            className="my-4"
+            defaultValue={data.email || ''}
+          />
+        </>
       ),
     },
     {
       name: 'name',
-      label: 'Next, your full name:',
+      label: 'Next, your full name and username:',
       input: (
-        <TextInput
-          placeholder="John Doe"
-          name="fullname"
-          id="input"
-          setter={setter('fullname')}
-          validatesetter={setIsValidate}
-        />
+        <>
+          <TextInput
+            placeholder="John Doe"
+            name="fullname"
+            id="input"
+            setter={setter('fullname')}
+            validatesetter={setIsValidate}
+            className="my-4"
+            defaultValue={data.fullname || ''}
+          />
+          {errorMsg && <div className="mt-2 text-center text-red-600">{errorMsg}</div>}
+          <TextInput
+            placeholder="Konixy"
+            name="username"
+            setter={setter('username')}
+            validatesetter={setIsValidate}
+            defaultValue={data.username || ''}
+          />
+        </>
+      ),
+    },
+    {
+      name: 'password',
+      label: 'Choose a strong password:',
+      input: (
+        <>
+          <PasswordInput
+            placeholder="Your password"
+            name="password"
+            id="input"
+            setter={setter('password')}
+            className="my-4"
+            defaultValue={data.password || ''}
+          />
+          <PasswordInput
+            placeholder="Repeat your password"
+            name="repeatPassword"
+            setter={setter('verifyPassword')}
+            isEqualTo={data.password}
+          />
+        </>
       ),
     },
     {
       name: 'birth',
       label: 'Next, your date of birth:',
-      input: <DateInput validatesetter={setIsValidate} setter={setter('birthDate')} className="my-4" id="input" />,
+      input: (
+        <DateInput
+          validatesetter={setIsValidate}
+          setter={setter('birthDate')}
+          className="my-4"
+          id="input"
+          defaultValue={data.birthDate}
+        />
+      ),
     },
+    { name: 'verifyemail', label: 'Finally, you need to verify your email adress', input: <>test</> },
   ];
   return (
     <>
       <BackButton />
-      <div className="absolute left-1/2 flex h-full -translate-x-1/2 flex-col items-center justify-center">
-        <form onSubmit={handleForm}>
-          {steps.map((e) => (
-            <Slide direction={step === e.name ? 'left' : 'right'} in={step === e.name} mountOnEnter unmountOnExit>
-              <div className="absolute">
-                <label htmlFor="input" className="text-2xl">
-                  {e.label}
-                </label>
-                <br />
-                {e.input}
-              </div>
-            </Slide>
-          ))}
-
-          <Primary as="button" type="submit" px={5} py={2.5} className="text-md mt-40" disabled={!isValidate}>
-            {loading ? (
-              'loading'
-            ) : (
-              <>
-                Continue <i className="fa-solid fa-arrow-right ml-1 translate-y-[1.5px]" />
-              </>
-            )}
-          </Primary>
-        </form>
-
-        {/* <form className="my-10 max-w-lg items-center">
-          <div className="mb-6">
-            <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-              Your email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="dark:shadow-sm-light block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              placeholder="name@flowbite.com"
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-              Your password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="dark:shadow-sm-light block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="repeat-password" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-              Repeat password
-            </label>
-            <input
-              type="password"
-              id="repeat-password"
-              className="dark:shadow-sm-light block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-6 flex items-start">
-            <div className="flex h-5 items-center">
-              <input
-                id="terms"
-                type="checkbox"
-                value=""
-                className="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-800"
-                required
-              />
+      <form
+        onSubmit={handleForm}
+        className="absolute left-1/2 flex h-full -translate-x-1/2 flex-col items-center justify-center text-center"
+      >
+        {steps.map((e) => (
+          <Slide direction={step === e.name ? 'left' : 'right'} in={step === e.name} mountOnEnter unmountOnExit>
+            <div className="absolute">
+              <label htmlFor="input" className="text-2xl">
+                {e.label}
+              </label>
+              <br />
+              {e.input}
             </div>
-            <label htmlFor="terms" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-              I agree with the{' '}
-              <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">
-                terms and conditions
-              </a>
-            </label>
-          </div>
-          <Primary as="button" type="submit" px={5} py={2.5} className="text-center text-sm">
-            Register
-          </Primary>
-        </form> */}
-      </div>
+          </Slide>
+        ))}
+
+        <Primary
+          as="button"
+          type="submit"
+          px={5}
+          py={2.5}
+          className="text-md"
+          style={{ marginTop: step === 'name' || step === 'password' ? '320px' : '230px' }}
+          disabled={!isValidate || loading}
+          loading={loading}
+        >
+          {step === 'birth' ? (
+            'Create account'
+          ) : (
+            <>
+              Continue <i className="fa-solid fa-arrow-right ml-1 translate-y-[1.5px]" />
+            </>
+          )}
+        </Primary>
+        <div className="mt-2 text-sm">
+          Or,{' '}
+          <Link href="/user/login" className="cursor-pointer text-blue-700 hover:underline">
+            sign in
+          </Link>
+          .
+        </div>
+      </form>
     </>
   );
 }

@@ -6,9 +6,10 @@ export function EmailInput(
   Props: {
     validatesetter: (value: boolean) => void;
     setter: (value: string) => void;
+    defaultValue?: string;
   } & ComponentPropsWithoutRef<'input'>,
 ) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(Props.defaultValue || '');
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gi;
 
   useEffect(() => {
@@ -23,6 +24,7 @@ export function EmailInput(
   return (
     <input
       {...Props}
+      defaultValue={undefined}
       type="email"
       placeholder="example@email.com"
       className={'rounded-lg px-5 py-2.5 font-Beau shadow-md ' + Props.className}
@@ -64,10 +66,11 @@ export function DateInput(
     validatesetter: (value: boolean) => void;
     max?: moment.MomentInput;
     setter: (value: Date) => void;
+    defaultValue?: Date;
   } & ComponentPropsWithoutRef<'input'>,
 ) {
   const max = Props.max || Date.now();
-  const [value, setValue] = useState(formatDate(Date.now()));
+  const [value, setValue] = useState(formatDate(Props.defaultValue || Date.now()));
 
   useEffect(() => {
     Props.setter(new Date(value));
@@ -78,6 +81,7 @@ export function DateInput(
   return (
     <input
       {...Props}
+      defaultValue={undefined}
       type="date"
       value={value}
       onChange={(e) => setValue(e.target.value)}
@@ -93,9 +97,10 @@ export function TextInput(
     caractersCount?: number;
     validatesetter?: (value: boolean) => void;
     setter: (value: string) => void;
+    defaultValue?: string;
   } & ComponentPropsWithoutRef<'input'>,
 ) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(Props.defaultValue || '');
   useEffect(() => {
     Props.setter(value);
     if (Props.caractersCount && Props.validatesetter) {
@@ -106,8 +111,43 @@ export function TextInput(
   return (
     <input
       {...Props}
+      defaultValue={undefined}
       className={'rounded-lg px-5 py-2.5 font-Beau shadow-md ' + Props.className}
       type="text"
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
+}
+
+export function PasswordInput(
+  Props: {
+    validatesetter?: (value: boolean) => void;
+    setter: (value: string) => void;
+    defaultValue?: string;
+    isEqualTo?: string;
+  } & ComponentPropsWithoutRef<'input'>,
+) {
+  const [value, setValue] = useState(Props.defaultValue || '');
+  const pwdRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  useEffect(() => {
+    Props.setter(value);
+    if (Props.validatesetter) {
+      if (Props.isEqualTo) {
+        if (value === Props.isEqualTo) Props.validatesetter(true);
+        else Props.validatesetter(false);
+      } else {
+        if (value.match(pwdRegex)) Props.validatesetter(true);
+        else Props.validatesetter(false);
+      }
+    }
+  }, [value]);
+  return (
+    <input
+      {...Props}
+      defaultValue={undefined}
+      className={'rounded-lg px-5 py-2.5 font-Beau shadow-md ' + Props.className}
+      type="password"
       value={value}
       onChange={(e) => setValue(e.target.value)}
     />
