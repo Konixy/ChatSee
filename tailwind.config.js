@@ -44,5 +44,6 @@ module.exports = {
     require('@tailwindcss/forms')({
       strategy: 'class',
     }),
+    require('tailwind-scrollbar')({ nocompatible: true }),
   ],
 };

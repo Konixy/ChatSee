@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid';
 import Message from 'components/Message';
 
 import type { Socket } from 'socket.io-client';
-import { Conv, MessageType } from 'lib/types';
+import { APIUser, Conv, MessageType } from 'lib/types';
 import MessageBox from 'components/MessageBox';
 import { useUser } from 'lib/userContext';
 import Link from 'next/link';
@@ -21,7 +21,6 @@ const ConvContext = createContext<{
     return;
   },
 });
-const user = nanoid();
 
 export const useConv = () => useContext(ConvContext);
 
@@ -30,7 +29,7 @@ let socket: undefined | Socket;
 function Index(Props: ScriptProps) {
   const [value, setValue] = useState('');
   const { conv, setConv } = useConv();
-  const userProvider = useUser();
+  const { user } = useUser() as { user: APIUser };
   const valueRegex = /(.|\s)*\S(.|\s)*/;
 
   useEffect(() => {
@@ -52,13 +51,14 @@ function Index(Props: ScriptProps) {
   }
 
   function addMessage(message: MessageType) {
-    setConv([...conv, message]);
+    console.log(message);
+    setConv(conv.concat([message]));
   }
 
   function resolveMessage(message: MessageType) {
-    const targetMessage = conv.find((e) => e.loading && e.id === message.id);
-    if (targetMessage) targetMessage.loading = false;
-    else addMessage(Object.assign(message, { loading: false }) as MessageType);
+    // const targetMessage = conv.find((e) => e.loading && e.id === message.id);
+    // if (targetMessage) targetMessage.loading = false;
+    addMessage(Object.assign(message, { loading: false }) as MessageType);
   }
 
   function handleSend(e: FormEvent) {
@@ -73,13 +73,13 @@ function Index(Props: ScriptProps) {
   return (
     <>
       <MenuButton />
-      <div className="mt-20 flex flex-col items-center">
+      <div className="mt-10 flex flex-col items-center">
         <div className="text-2xl">Chat</div>
         {/* userProvider.user && <>(logged in as {userProvider.user?.username})</>*/}
         <MessageBox user={user} />
-        <form onSubmit={handleSend} className="bottom-0 mt-10 mb-10 flex flex-row items-center">
+        <form onSubmit={handleSend} className="bottom-0 mb-10 flex flex-row items-center">
           <input
-            className="rounded-md bg-gray-50 py-2 px-4 text-black outline-none placeholder:text-gray-500"
+            className="rounded-lg bg-gray-50 py-2 px-4 text-black shadow-md outline-none placeholder:text-gray-500"
             type="text"
             placeholder="Type your message"
             value={value}
@@ -88,7 +88,7 @@ function Index(Props: ScriptProps) {
           <input
             type="submit"
             disabled={!value.match(valueRegex)}
-            className="inline-bloc bg-second disabled:bg-second/50 ml-4 w-[35px] translate-y-[5px] py-2 px-4 hover:cursor-pointer disabled:cursor-not-allowed"
+            className="inline-bloc bg-second disabled:bg-second/50 ml-4 w-[35px] translate-y-[5px] py-2 px-4 disabled:cursor-not-allowed hover:cursor-pointer"
             style={{
               backgroundImage: 'url("/images/sendIcon.svg")',
               backgroundSize: '100%',

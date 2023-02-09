@@ -19,7 +19,7 @@ export type MessageType = {
   id: string;
   convId?: string;
   content: string;
-  sender: string;
+  sender: APIUser;
   loading?: boolean;
 };
 export type Conv = MessageType[];
