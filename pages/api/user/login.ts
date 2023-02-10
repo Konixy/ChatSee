@@ -2,6 +2,7 @@ import database from 'lib/database';
 import withSession from 'lib/session';
 
 export default withSession(async (req, res) => {
+  if (req.method !== 'POST') return res.status(404);
   if (!req.body || !req.body.email || !req.body.password)
     return res.send({ success: false, message: 'invalid request body' });
   console.log(req.body);

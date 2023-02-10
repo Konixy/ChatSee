@@ -28,8 +28,11 @@ export default function Register() {
     if (data.username === '') return setIsValidate(false);
     const usernameRegex = /^(?=.{4,16}$)[a-zA-Z0-9._-]+$/g;
     if (!data.username.match(usernameRegex)) {
-      setErrorMsg("username don't match the regex");
       setIsValidate(false);
+      if (!data.username.match(/^(?=.{4,16}$)/)) setErrorMsg('Username must contain between 8 and 16 characters');
+      else if (!data.username.match(/^[a-zA-Z0-9._-]+$/))
+        setErrorMsg('Username must not contain space or specials characters');
+      else setErrorMsg('Incorrect username');
     } else {
       setErrorMsg(null);
       setIsValidate(true);
@@ -46,9 +49,8 @@ export default function Register() {
     } else if (data.password === data.verifyPassword) {
       setErrorMsg(null);
       setIsValidate(true);
-      console.log('all is clean');
     } else {
-      setErrorMsg('password and verifyPassword are not the same');
+      setErrorMsg('You must provide the same password for both fields');
       setIsValidate(false);
     }
   }, [data.password, data.verifyPassword]);
@@ -201,6 +203,7 @@ export default function Register() {
       label: 'Choose a strong password:',
       input: (
         <>
+          {errorMsg && <div className="mt-2 text-center text-red-600">{errorMsg}</div>}
           <PasswordInput
             placeholder="Your password"
             name="password"
@@ -209,9 +212,13 @@ export default function Register() {
             className="my-4"
             defaultValue={data.password || ''}
           />
+          <label htmlFor="repeatPassword" className="text-lg">
+            Confirm password
+          </label>
           <PasswordInput
             placeholder="Repeat your password"
             name="repeatPassword"
+            id="repeatPassword"
             setter={setter('verifyPassword')}
             isEqualTo={data.password}
           />
