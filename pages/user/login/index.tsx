@@ -30,6 +30,7 @@ export default function Login() {
           router.push('/');
         } else {
           setErrorMsg('Email or password are incorrect!');
+          console.log(r.data.message);
           setPassword('');
         }
       });
@@ -38,11 +39,14 @@ export default function Login() {
     <>
       <BackButton />
 
-      <form onSubmit={handleSubmit}>
-        {errorMsg && <div className="bg-red-500 text-lg">{errorMsg}</div>}
-        <EmailInput setter={setEmail} validatesetter={validate} disabled={!isValidate} />
-        <PasswordInput setter={setPassword} />
-        <Primary as="button" type="submit" name="submitBtn">
+      <form
+        onSubmit={handleSubmit}
+        className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col"
+      >
+        {errorMsg && <div className="text-lg text-red-500">{errorMsg}</div>}
+        <EmailInput setter={setEmail} validatesetter={validate} className="my-4" />
+        <PasswordInput setter={setPassword} className="mb-8" />
+        <Primary as="button" type="submit" name="submitBtn" disabled={!isValidate || password === ''} loading={loading}>
           Log in
         </Primary>
       </form>

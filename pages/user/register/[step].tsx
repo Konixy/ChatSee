@@ -278,9 +278,9 @@ export default function Register() {
           )}
         </Primary>
         <div className="mt-2 text-sm">
-          Or,{' '}
+          Allready have an account ?{' '}
           <Link href="/user/login" className="cursor-pointer text-blue-700 hover:underline">
-            sign in
+            Sign in
           </Link>
           .
         </div>

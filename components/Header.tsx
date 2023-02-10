@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Button from 'components/Buttons';
 import { useUser } from 'lib/userContext';
+import UserDropdown from './UserDropdown';
 
 export default function Header() {
   const { user } = useUser();
@@ -20,9 +21,13 @@ export default function Header() {
           className="mr-2 block bg-cover bg-no-repeat"
         />
       </Link>
-      <Button.Primary href={user ? '/chat' : '/user/register/mail'} as="link" px={4} py={2}>
-        {user ? 'My chat' : 'Get Started!'}
-      </Button.Primary>
+      {user ? (
+        <UserDropdown />
+      ) : (
+        <Button.Primary href={user ? '/chat' : '/user/register/mail'} as="link" px={4} py={2}>
+          Get Started!
+        </Button.Primary>
+      )}
     </div>
   );
 }
